@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import axios from 'axios';
+import { Carousel } from 'antd';
 
 export default function Home() {
   const [emotion, setEmotion] = useState('');
@@ -33,11 +34,11 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-400 to-purple-500 p-6">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-gray-800 to-gray-900 p-6">
       <h1 className="text-4xl font-extrabold text-white mb-6 drop-shadow-md">Emotion-Based Playlist Generator</h1>
 
       <select
-        className="p-2 border border-white rounded bg-white text-gray-800 mb-4 shadow-md focus:outline-none focus:ring focus:ring-blue-300 transition duration-200"
+        className="p-2 border border-gray-600 rounded bg-gray-800 text-gray-200 mb-4 shadow-md focus:outline-none focus:ring focus:ring-blue-300 transition duration-200"
         value={emotion}
         onChange={(e) => setEmotion(e.target.value)}
       >
@@ -57,21 +58,29 @@ export default function Home() {
         {loading ? 'Loading...' : 'Get Playlist'}
       </button>
 
-      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-4xl">
-        {playlists.map((track, index) => (
-          <div key={index} className="bg-white p-4 shadow-lg rounded-lg transition-transform transform hover:scale-105 duration-300">
-            <h3 className="font-semibold text-lg text-blue-600">{track.name}</h3>
-            <p className="text-gray-600">Artist: {track.artist}</p>
-            <a
-              href={track.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 mt-2 inline-block hover:underline transition duration-200"
-            >
-              Listen on Spotify
-            </a>
-          </div>
-        ))}
+      <div className="mt-8 w-full max-w-4xl">
+        <Carousel
+          dots={true}
+          autoplay
+          autoplaySpeed={2000}
+          arrows
+          pauseOnHover
+        >
+          {playlists.map((track, index) => (
+            <div key={index} className="bg-gray-700 p-4 shadow-lg rounded-lg transition-transform duration-300">
+              <h3 className="font-semibold text-lg text-blue-400">{track.name}</h3>
+              <p className="text-gray-300">Artist: {track.artist}</p>
+              <a
+                href={track.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 mt-2 inline-block hover:underline transition duration-200"
+              >
+                Listen on Spotify
+              </a>
+            </div>
+          ))}
+        </Carousel>
       </div>
     </div>
   );
