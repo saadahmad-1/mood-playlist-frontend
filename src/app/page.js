@@ -8,6 +8,7 @@ export default function Home() {
   const [emotion, setEmotion] = useState('');
   const [playlists, setPlaylists] = useState([]);
   const [loading, setLoading] = useState(false);
+  const api_url = process.env.NEXT_PUBLIC_API_URL;
 
   const emotions = [
     { label: 'Happy', value: 'happy' },
@@ -24,7 +25,7 @@ export default function Home() {
 
     setLoading(true);
     try {
-      const response = await axios.post('http://127.0.0.1:5000/get-playlist', { emotion: emotion });
+      const response = await axios.post(api_url + '/get-playlist', { emotion: emotion });
       setPlaylists(response.data);
     } catch (error) {
       alert("Error fetching playlist, please try again.");
