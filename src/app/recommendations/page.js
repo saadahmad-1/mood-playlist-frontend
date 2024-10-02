@@ -1,11 +1,10 @@
 "use client";
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { Carousel } from 'antd';
 
-export default function PlaylistPage() {
-    const router = useRouter();
+function PlaylistContent() {
     const searchParams = useSearchParams();
     const [playlistData, setPlaylistData] = useState(null);
 
@@ -59,5 +58,13 @@ export default function PlaylistPage() {
                 </Carousel>
             </div>
         </div>
+    );
+}
+
+export default function PlaylistPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <PlaylistContent />
+        </Suspense>
     );
 }
